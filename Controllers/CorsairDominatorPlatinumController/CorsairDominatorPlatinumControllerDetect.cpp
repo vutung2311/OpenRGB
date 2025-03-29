@@ -23,7 +23,7 @@ using namespace std::chrono_literals;
 json corsair_dominator_models =
 {
     {
-        "CMT",
+        "CMP",
         {
             {"name",  "Corsair Dominator Platinum"},
             {"leds",  12}
@@ -51,7 +51,7 @@ json corsair_dominator_models =
         }
     },
     {
-        "CMP",
+        "CMT",
         {
             {"name",  "Corsair Dominator Titanium"},
             {"leds",  11}
