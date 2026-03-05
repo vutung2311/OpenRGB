@@ -29,6 +29,7 @@ public:
     void UpdateSingleLED(int led);
 
     void DeviceUpdateMode();
+    void DeviceSaveMode();
 
 private:
     CorsairDominatorPlatinumController* controller;

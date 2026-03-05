@@ -1348,6 +1348,46 @@ void OpenRGBDialog::onDetectionEnded()
     {
         ShowLEDView();
     }
+
+    /*-----------------------------------------------------*\
+    | Load startup profile: --profile CLI arg takes         |
+    | priority, otherwise use the profile configured in     |
+    | the AutoStart settings page                           |
+    \*-----------------------------------------------------*/
+    bool profile_handled = false;
+
+    QStringList args = QCoreApplication::arguments();
+
+    for(int i = 1; i < args.size(); i++)
+    {
+        if((args[i] == "--profile" || args[i] == "-p") && i + 1 < args.size())
+        {
+            /*-------------------------------------------------*\
+            | --profile was given on CLI, handled by             |
+            | cli_post_detection. Just update the UI.           |
+            \*-------------------------------------------------*/
+            profile_handled = true;
+            break;
+        }
+    }
+
+    if(!profile_handled)
+    {
+        json autostart_settings = ResourceManager::get()->GetSettingsManager()->GetSettings("AutoStart");
+
+        if(autostart_settings.contains("setprofile") && autostart_settings["setprofile"].get<bool>()
+        && autostart_settings.contains("profile"))
+        {
+            std::string profile_name = autostart_settings["profile"].get<std::string>();
+            int profile_index        = ui->ProfileBox->findText(QString::fromStdString(profile_name));
+
+            if(profile_index > -1)
+            {
+                ui->ProfileBox->setCurrentIndex(profile_index);
+                on_ButtonLoadProfile_clicked();
+            }
+        }
+    }
 }
 
 void OpenRGBDialog::on_SetAllDevices(unsigned char red, unsigned char green, unsigned char blue)
