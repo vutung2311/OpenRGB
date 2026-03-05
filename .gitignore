@@ -122,3 +122,9 @@ compile_commands.json
 
 # Generated i18n files
 *.qm
+test_effects.sh
+openrgb.lto*
+openrgb.res
+openrgb.wpa*
+*.o
+*.ltrans*
